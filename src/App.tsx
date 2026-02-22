@@ -1,16 +1,19 @@
-import { Routes, Route } from 'react-router-dom'
-import { Navbar } from './components/navbar'
-import { Home } from './pages/home'
-// import reactLogo from './assets/react.svg'
-// <img src={reactLogo} className="logo react" alt="React logo" />
+import { Routes, Route, Navigate } from 'react-router-dom'
+import Sidebar from './components/layout/Sidebar'
+import AESPage from './pages/AESPage'
+import AffinePage from './pages/AffinePage'
 
 function App() {
   return (
-    <div className="flex bg-[#050813]">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
+    <div className="flex h-screen overflow-hidden bg-dark-base text-white font-sans">
+      <Sidebar />
+      <main className="flex-1 p-10 overflow-y-auto">
+        <Routes>
+          <Route path="/" element={<Navigate to="/aes" replace />} />
+          <Route path="/aes" element={<AESPage />} />
+          <Route path="/affine" element={<AffinePage />} />
+        </Routes>
+      </main>
     </div>
   )
 }

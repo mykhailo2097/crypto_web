@@ -1,89 +1,61 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@theme {
+    /* ── Fonts ─────────────────────────────────────── */
+    --font-mono: "JetBrains Mono", monospace;
+    --font-sans: "Space Grotesk", sans-serif;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    /* ── Backgrounds ────────────────────────────────── */
+    --color-dark-base:    #0d1117;  /* bg-dark-base    — основний фон       */
+    --color-dark-card:    #161b27;  /* bg-dark-card    — картки              */
+    --color-dark-sidebar: #111827;  /* bg-dark-sidebar — сайдбар             */
+    --color-dark-deep:    #0f0a1e;  /* bg-dark-deep    — affine темний фон   */
+    --color-dark-input:   #0d1420;  /* bg-dark-input   — формули, блоки коду */
+    --color-dark-hover:   #1f2937;  /* bg-dark-hover   — hover стани         */
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* ── Borders ────────────────────────────────────── */
+    --color-border-base:   #1f2937; /* border-border-base   — базова рамка   */
+    --color-border-blue:   #1e3a5f; /* border-border-blue   — AES рамки      */
+    --color-border-purple: #3b1f6e; /* border-border-purple — Affine рамки   */
+    --color-border-red:    #7f1d1d; /* border-border-red    — попередження    */
+    --color-border-green:  #166534; /* border-border-green  — успіх          */
+    --color-border-yellow: #854d0e; /* border-border-yellow — умови          */
+
+    /* ── AES theme ──────────────────────────────────── */
+    --color-aes-primary: #60a5fa;   /* text-aes-primary — синій акцент       */
+    --color-aes-bg:      #1e3a5f;   /* bg-aes-bg        — AES фон елементів  */
+    --color-aes-dark:    #0c1420;   /* bg-aes-dark      — темний AES фон     */
+
+    /* ── Affine / CRT theme ─────────────────────────── */
+    --color-affine-primary: #c084fc; /* text-affine-primary  — фіолетовий акцент  */
+    --color-affine-bg:      #2d1b69; /* bg-affine-bg         — affine фон елементів */
+    --color-affine-dark:    #0f0a1e; /* bg-affine-dark       — темний affine фон    */
+    --color-affine-border:  #3b1f6e; /* border-affine-border — affine рамка        */
+
+    /* ── Status / Badge colors ──────────────────────── */
+    --color-military-bg: #052e16;   /* bg-military-bg  — military grade бейдж */
+    --color-nsa-bg:      #0c1a0c;   /* bg-nsa-bg       — АНБ бейдж фон        */
+    --color-fips-bg:     #0c1420;   /* bg-fips-bg      — FIPS бейдж фон       */
+    --color-gov-bg:      #1a0c00;   /* bg-gov-bg       — урядовий бейдж фон   */
+
+    /* ── Warning / Danger ───────────────────────────── */
+    --color-warning-bg:     #1c1400; /* bg-warning-bg       — попередження фон */
+    --color-warning-border: #854d0e; /* border-warning-border                   */
+    --color-danger-bg:      #1a0a0a; /* bg-danger-bg        — небезпека фон     */
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: #0d1117;
+    color: #e6edf3;
 }
 
 #root {
-  min-height: 100vh;
-  width: 100%;
+    min-height: 100vh;
 }
