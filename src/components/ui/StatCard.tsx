@@ -11,8 +11,8 @@ interface StatCardProps {
 
 const themeStyles: Record<string, string> = {
   default: 'bg-dark-card border-border-base',
-  purple: 'border-border-purple bg-[#0d0a1a]',
-  red: 'border-border-red bg-[#130808]',
+  purple: 'border-border-purple bg-stat-purple',
+  red: 'border-border-red bg-stat-red',
 }
 
 export default function StatCard({

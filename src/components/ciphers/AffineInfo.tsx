@@ -6,9 +6,9 @@ import {
   UseCaseTags,
   FormulaBox,
   PageHeader,
-  CipherTabs,
   MathBasis,
 } from '../ui'
+import AffineCryptoPanel from './AffineCryptoPanel'
 
 interface Props {
   data: AffineCipher
@@ -215,21 +215,7 @@ export default function AffineInfo({ data }: Props) {
 
       <UseCaseTags useCases={data.use_cases} variant="purple" />
 
-      <CipherTabs
-        accentColor="purple"
-        tabs={[
-          {
-            label: 'Шифрування',
-            icon: <LockIcon />,
-            content: <div className="text-gray-500 text-sm">// Форма шифрування</div>,
-          },
-          {
-            label: 'Розшифрування',
-            icon: <LockIcon />,
-            content: <div className="text-gray-500 text-sm">// Форма розшифрування</div>,
-          },
-        ]}
-      />
+      <AffineCryptoPanel />
     </div>
   )
 }

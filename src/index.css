@@ -6,43 +6,50 @@
     --font-sans: "Space Grotesk", sans-serif;
 
     /* ── Backgrounds ────────────────────────────────── */
-    --color-dark-base:    #0d1117;  /* bg-dark-base    — основний фон       */
-    --color-dark-card:    #161b27;  /* bg-dark-card    — картки              */
-    --color-dark-sidebar: #111827;  /* bg-dark-sidebar — сайдбар             */
-    --color-dark-deep:    #0f0a1e;  /* bg-dark-deep    — affine темний фон   */
-    --color-dark-input:   #0d1420;  /* bg-dark-input   — формули, блоки коду */
-    --color-dark-hover:   #1f2937;  /* bg-dark-hover   — hover стани         */
+    --color-dark-base:    #0d1117;
+    --color-dark-card:    #161b27;
+    --color-dark-sidebar: #111827;
+    --color-dark-deep:    #0f0a1e;
+    --color-dark-input:   #0d1420;
+    --color-dark-hover:   #1f2937;
 
     /* ── Borders ────────────────────────────────────── */
-    --color-border-base:   #1f2937; /* border-border-base   — базова рамка   */
-    --color-border-blue:   #1e3a5f; /* border-border-blue   — AES рамки      */
-    --color-border-purple: #3b1f6e; /* border-border-purple — Affine рамки   */
-    --color-border-red:    #7f1d1d; /* border-border-red    — попередження    */
-    --color-border-green:  #166534; /* border-border-green  — успіх          */
-    --color-border-yellow: #854d0e; /* border-border-yellow — умови          */
+    --color-border-base:   #1f2937;
+    --color-border-blue:   #1e3a5f;
+    --color-border-purple: #3b1f6e;
+    --color-border-red:    #7f1d1d;
+    --color-border-green:  #166534;
+    --color-border-yellow: #854d0e;
 
     /* ── AES theme ──────────────────────────────────── */
-    --color-aes-primary: #60a5fa;   /* text-aes-primary — синій акцент       */
-    --color-aes-bg:      #1e3a5f;   /* bg-aes-bg        — AES фон елементів  */
-    --color-aes-dark:    #0c1420;   /* bg-aes-dark      — темний AES фон     */
+    --color-aes-primary: #60a5fa;
+    --color-aes-bg:      #1e3a5f;
+    --color-aes-dark:    #0c1420;
 
     /* ── Affine / CRT theme ─────────────────────────── */
-    --color-affine-primary: #c084fc; /* text-affine-primary  — фіолетовий акцент  */
-    --color-affine-bg:      #2d1b69; /* bg-affine-bg         — affine фон елементів */
-    --color-affine-dark:    #0f0a1e; /* bg-affine-dark       — темний affine фон    */
-    --color-affine-border:  #3b1f6e; /* border-affine-border — affine рамка        */
+    --color-affine-primary: #c084fc;
+    --color-affine-bg:      #2d1b69;
+    --color-affine-dark:    #0f0a1e;
+    --color-affine-border:  #3b1f6e;
 
-    /* ── Status / Badge colors ──────────────────────── */
-    --color-military-bg: #052e16;   /* bg-military-bg  — military grade бейдж */
-    --color-nsa-bg:      #0c1a0c;   /* bg-nsa-bg       — АНБ бейдж фон        */
-    --color-fips-bg:     #0c1420;   /* bg-fips-bg      — FIPS бейдж фон       */
-    --color-gov-bg:      #1a0c00;   /* bg-gov-bg       — урядовий бейдж фон   */
+    /* ── Badge / status ─────────────────────────────── */
+    --color-military-bg: #052e16;
+    --color-nsa-bg:      #0c1a0c;
+    --color-fips-bg:     #0c1420;
+    --color-gov-bg:      #1a0c00;
+    --color-badge-orange: #422006;
+    --color-badge-indigo: #1e1b4b;
+    --color-badge-red:    #450a0a;
+    --color-stat-purple:  #0d0a1a;
+    --color-stat-red:     #130808;
 
     /* ── Warning / Danger ───────────────────────────── */
-    --color-warning-bg:     #1c1400; /* bg-warning-bg       — попередження фон */
-    --color-warning-border: #854d0e; /* border-warning-border                   */
-    --color-danger-bg:      #1a0a0a; /* bg-danger-bg        — небезпека фон     */
+    --color-warning-bg:     #1c1400;
+    --color-warning-border: #854d0e;
+    --color-danger-bg:      #1a0a0a;
 }
+
+/* ── Base ───────────────────────────────────────────────────── */
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -56,6 +63,137 @@ body {
     color: #e6edf3;
 }
 
-#root {
-    min-height: 100vh;
+aside, main, div, section, article, header,
+input, textarea, button, span, p, h1, h2, h3, label, a {
+    transition: background-color 0.25s ease, border-color 0.2s ease,
+                color 0.2s ease, box-shadow 0.25s ease;
 }
+
+.animate-spin { transition: none !important; }
+
+#root { min-height: 100vh; }
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT THEME
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. CSS variable overrides (for var()-based utilities) */
+[data-theme="light"] {
+    /* Gray scale flip — text-gray-200 becomes dark, bg-gray-800 becomes light */
+    --color-gray-50:  oklch(0.129 0.042 264.695);
+    --color-gray-100: oklch(0.208 0.042 265.755);
+    --color-gray-200: oklch(0.279 0.041 260.031);
+    --color-gray-300: oklch(0.373 0.034 259.733);
+    --color-gray-400: oklch(0.446 0.030 256.802);
+    --color-gray-600: oklch(0.707 0.022 261.325);
+    --color-gray-700: oklch(0.872 0.010 258.338);
+    --color-gray-800: oklch(0.928 0.006 264.531);
+    --color-gray-900: oklch(0.967 0.003 264.542);
+    --color-gray-950: oklch(0.985 0.002 247.839);
+
+    /* Accents — darker for readability on light bg */
+    --color-blue-400:   oklch(0.546 0.245 262.881);
+    --color-blue-300:   oklch(0.546 0.245 262.881);
+    --color-purple-400: oklch(0.558 0.288 302.321);
+    --color-purple-300: oklch(0.558 0.288 302.321);
+    --color-violet-400: oklch(0.541 0.281 293.009);
+    --color-indigo-400: oklch(0.511 0.262 276.966);
+    --color-indigo-300: oklch(0.511 0.262 276.966);
+    --color-green-400:  oklch(0.527 0.154 150.069);
+    --color-green-300:  oklch(0.527 0.154 150.069);
+    --color-red-400:    oklch(0.577 0.245 27.325);
+    --color-orange-400: oklch(0.553 0.195 38.402);
+
+    /* Backgrounds */
+    --color-dark-base:    #f5f7fa;
+    --color-dark-card:    #ffffff;
+    --color-dark-sidebar: #ffffff;
+    --color-dark-deep:    #f3f0ff;
+    --color-dark-input:   #f8f9fc;
+    --color-dark-hover:   #eef0f4;
+
+    /* Borders */
+    --color-border-base:   #e2e8f0;
+    --color-border-blue:   #bfdbfe;
+    --color-border-purple: #ddd6fe;
+    --color-border-red:    #fecaca;
+    --color-border-green:  #bbf7d0;
+    --color-border-yellow: #fde68a;
+
+    /* AES */
+    --color-aes-primary: #2563eb;
+    --color-aes-bg:      #eff6ff;
+    --color-aes-dark:    #dbeafe;
+
+    /* Affine */
+    --color-affine-primary: #7c3aed;
+    --color-affine-bg:      #f5f3ff;
+    --color-affine-dark:    #ede9fe;
+    --color-affine-border:  #ddd6fe;
+
+    /* Badges */
+    --color-military-bg:  #dcfce7;
+    --color-nsa-bg:       #f0fdf4;
+    --color-fips-bg:      #eff6ff;
+    --color-gov-bg:       #fff7ed;
+    --color-badge-orange: #fff7ed;
+    --color-badge-indigo: #eef2ff;
+    --color-badge-red:    #fff1f2;
+    --color-stat-purple:  #faf5ff;
+    --color-stat-red:     #fff1f2;
+
+    /* Warnings */
+    --color-warning-bg:     #fefce8;
+    --color-warning-border: #ca8a04;
+    --color-danger-bg:      #fef2f2;
+}
+
+/* 2. Explicit class overrides (belt-and-suspenders for Tailwind v4) */
+
+/* Body */
+[data-theme="light"] body {
+    background: #f5f7fa;
+    color: #0f172a;
+}
+
+/* Backgrounds */
+[data-theme="light"] .bg-dark-base    { background-color: #f5f7fa; }
+[data-theme="light"] .bg-dark-card    { background-color: #ffffff; }
+[data-theme="light"] .bg-dark-sidebar { background-color: #ffffff; }
+[data-theme="light"] .bg-dark-input   { background-color: #f8f9fc; }
+[data-theme="light"] .bg-dark-hover   { background-color: #eef0f4; }
+[data-theme="light"] .bg-dark-deep    { background-color: #f3f0ff; }
+[data-theme="light"] .bg-aes-bg       { background-color: #eff6ff; }
+[data-theme="light"] .bg-aes-dark     { background-color: #dbeafe; }
+[data-theme="light"] .bg-affine-bg    { background-color: #f5f3ff; }
+[data-theme="light"] .bg-affine-dark  { background-color: #ede9fe; }
+[data-theme="light"] .bg-military-bg  { background-color: #dcfce7; }
+[data-theme="light"] .bg-nsa-bg       { background-color: #f0fdf4; }
+[data-theme="light"] .bg-fips-bg      { background-color: #eff6ff; }
+[data-theme="light"] .bg-gov-bg       { background-color: #fff7ed; }
+[data-theme="light"] .bg-warning-bg   { background-color: #fefce8; }
+[data-theme="light"] .bg-danger-bg    { background-color: #fef2f2; }
+[data-theme="light"] .bg-badge-orange { background-color: #fff7ed; }
+[data-theme="light"] .bg-badge-indigo { background-color: #eef2ff; }
+[data-theme="light"] .bg-badge-red    { background-color: #fff1f2; }
+[data-theme="light"] .bg-stat-purple  { background-color: #faf5ff; }
+[data-theme="light"] .bg-stat-red     { background-color: #fff1f2; }
+
+/* Borders */
+[data-theme="light"] .border-border-base    { border-color: #e2e8f0; }
+[data-theme="light"] .border-border-blue    { border-color: #bfdbfe; }
+[data-theme="light"] .border-border-purple  { border-color: #ddd6fe; }
+[data-theme="light"] .border-border-red     { border-color: #fecaca; }
+[data-theme="light"] .border-border-green   { border-color: #bbf7d0; }
+[data-theme="light"] .border-warning-border { border-color: #ca8a04; }
+[data-theme="light"] .border-affine-border  { border-color: #ddd6fe; }
+
+/* Card elevation */
+[data-theme="light"] .bg-dark-card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Recharts charts */
+[data-theme="light"] .recharts-cartesian-grid line { stroke: #e5e7eb !important; }
+[data-theme="light"] .recharts-cartesian-axis-line { stroke: #e5e7eb !important; }
+[data-theme="light"] .recharts-text                { fill: #6b7280 !important;   }

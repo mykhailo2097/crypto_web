@@ -1,5 +1,6 @@
 import { AESCipher } from '@/types/cipher.types.ts'
-import { Badge, StatCard, FeatureList, UseCaseTags, PageHeader, CipherTabs } from '../ui'
+import { Badge, StatCard, FeatureList, UseCaseTags, PageHeader } from '../ui'
+import AESCryptoPanel from './AESCryptoPanel'
 
 interface Props {
   data: AESCipher
@@ -191,21 +192,7 @@ export default function AESInfo({ data }: Props) {
 
       <UseCaseTags useCases={data.use_cases} />
 
-      <CipherTabs
-        accentColor="blue"
-        tabs={[
-          {
-            label: 'Шифрування',
-            icon: <LockIcon size={14} />,
-            content: <div className="text-gray-500 text-sm">// Форма шифрування</div>,
-          },
-          {
-            label: 'Розшифрування',
-            icon: <LockIcon size={14} />,
-            content: <div className="text-gray-500 text-sm">// Форма розшифрування</div>,
-          },
-        ]}
-      />
+      <AESCryptoPanel />
     </div>
   )
 }

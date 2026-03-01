@@ -7,10 +7,10 @@ interface BadgeProps {
 const variantStyles: Record<string, string> = {
   blue: 'bg-aes-bg text-blue-400',
   green: 'bg-military-bg text-green-400',
-  orange: 'bg-[#422006] text-orange-400',
+  orange: 'bg-badge-orange text-orange-400',
   purple: 'bg-affine-bg text-purple-400',
-  indigo: 'bg-[#1e1b4b] text-indigo-400',
-  red: 'bg-[#450a0a] text-red-400',
+  indigo: 'bg-badge-indigo text-indigo-400',
+  red: 'bg-badge-red text-red-400',
 }
 
 export default function Badge({ children, variant = 'blue', className = '' }: BadgeProps) {

@@ -31,7 +31,7 @@ interface UseCaseTagsProps {
 
 export default function UseCaseTags({ useCases, variant = 'default' }: UseCaseTagsProps) {
   const tagStyle =
-    variant === 'purple' ? 'bg-[#1e1b4b] text-indigo-300' : 'bg-dark-hover text-gray-300'
+    variant === 'purple' ? 'bg-badge-indigo text-indigo-300' : 'bg-dark-hover text-gray-300'
 
   return (
     <div className="border border-border-base rounded-xl p-4 flex flex-wrap gap-2">

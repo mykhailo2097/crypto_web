@@ -9,9 +9,11 @@ interface ApiStore {
 }
 
 export const useApiStore = create<ApiStore>((set, get) => ({
-  mode: 'production',
+  mode: 'local',
   setMode: (mode) => set({ mode }),
   getBaseUrl: () => {
-    return get().mode === 'local' ? 'http://192.168.0.156:8000' : import.meta.env.VITE_API_URL
+    return get().mode === 'local'
+      ? import.meta.env.VITE_LOCAL_API_URL ?? 'http://localhost:8000'
+      : import.meta.env.VITE_API_URL
   },
 }))

@@ -30,7 +30,7 @@ const options: ApiOption[] = [
         <path d="M12 17v4" />
       </svg>
     ),
-    activeStyle: 'border-green-800 bg-[#052e16]',
+    activeStyle: 'border-green-800 bg-military-bg',
     activeLabelStyle: 'text-green-400',
     activeUrlStyle: 'text-green-600',
     activeDot: true,
