@@ -27,6 +27,20 @@ export interface AffineCryptoResponse {
   execution_time: number
 }
 
+export interface EncodingTableEntry {
+  code: number
+  char: string
+  name: string
+  category: string
+}
+
+export interface EncodingTableResponse {
+  table: EncodingTableEntry[]
+  total_chars: number
+  code_range: string
+  categories: Record<string, string>
+}
+
 export const ciphersApi = {
   getAESInfo: () => httpClient.get<AESCipher, AESCipher>('/crypto/aes/info'),
   getAffineInfo: () => httpClient.get<AffineCipher, AffineCipher>('/crypto/affine_crt/info'),
@@ -62,6 +76,11 @@ export const ciphersApi = {
       '/crypto/affine_crt/decrypt',
       body,
     ),
+
+  // ── Encoding table ────────────────────────────────────────
+
+  getEncodingTable: () =>
+    httpClient.get<EncodingTableResponse, EncodingTableResponse>('/crypto/encoding-table'),
 
   // ── Benchmarks ────────────────────────────────────────────
 

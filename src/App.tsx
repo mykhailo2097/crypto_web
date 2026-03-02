@@ -3,6 +3,7 @@ import Sidebar from './components/layout/Sidebar'
 import AESPage from './pages/AESPage'
 import AffinePage from './pages/AffinePage'
 import BenchmarkPage from './pages/BenchmarkPage'
+import EncodingTablePage from './pages/EncodingTablePage'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/aes" element={<AESPage />} />
           <Route path="/affine" element={<AffinePage />} />
           <Route path="/benchmark" element={<BenchmarkPage />} />
+          <Route path="/encoding-table" element={<EncodingTablePage />} />
         </Routes>
       </main>
     </div>

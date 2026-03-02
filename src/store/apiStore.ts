@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 type ApiMode = 'local' | 'production'
 
@@ -8,12 +9,17 @@ interface ApiStore {
   getBaseUrl: () => string
 }
 
-export const useApiStore = create<ApiStore>((set, get) => ({
-  mode: 'local',
-  setMode: (mode) => set({ mode }),
-  getBaseUrl: () => {
-    return get().mode === 'local'
-      ? import.meta.env.VITE_LOCAL_API_URL ?? 'http://localhost:8000'
-      : import.meta.env.VITE_API_URL
-  },
-}))
+export const useApiStore = create<ApiStore>()(
+  persist(
+    (set, get) => ({
+      mode: 'local',
+      setMode: (mode) => set({ mode }),
+      getBaseUrl: () => {
+        return get().mode === 'local'
+          ? import.meta.env.VITE_LOCAL_API_URL ?? 'http://localhost:8000'
+          : import.meta.env.VITE_API_URL
+      },
+    }),
+    { name: 'crypto-api-mode' },
+  ),
+)

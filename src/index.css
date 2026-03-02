@@ -197,3 +197,9 @@ input, textarea, button, span, p, h1, h2, h3, label, a {
 [data-theme="light"] .recharts-cartesian-grid line { stroke: #e5e7eb !important; }
 [data-theme="light"] .recharts-cartesian-axis-line { stroke: #e5e7eb !important; }
 [data-theme="light"] .recharts-text                { fill: #6b7280 !important;   }
+
+/* Recharts Brush */
+[data-theme="light"] .recharts-brush-background    { fill: #c8d4e0 !important; }
+[data-theme="light"] .recharts-brush-slide         { fill: #ffffff !important; stroke: #94a3b8 !important; stroke-width: 1 !important; }
+[data-theme="light"] .recharts-brush-traveller rect { fill: #64748b !important; stroke: #475569 !important; }
+[data-theme="light"] .recharts-brush-texts         { fill: #6b7280 !important; }

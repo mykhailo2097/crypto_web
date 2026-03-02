@@ -38,7 +38,7 @@ const options: ApiOption[] = [
   {
     mode: 'production',
     label: 'Віддалений',
-    url: 'api.server.com',
+    url: '92.52.166.101:999',
     icon: (
       <svg
         width="13"

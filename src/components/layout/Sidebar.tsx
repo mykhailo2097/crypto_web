@@ -57,6 +57,19 @@ const navItems = [
     activeColor: 'text-indigo-400 bg-indigo-900/30',
     inactiveColor: 'text-gray-400 hover:bg-dark-hover',
   },
+  {
+    to: '/encoding-table',
+    label: 'Таблиця кодування',
+    sectionLabel: 'ДОВІДНИК',
+    badge: undefined,
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18" />
+      </svg>
+    ),
+    activeColor: 'text-green-400 bg-military-bg',
+    inactiveColor: 'text-gray-400 hover:bg-dark-hover',
+  },
 ]
 
 export default function Sidebar() {
