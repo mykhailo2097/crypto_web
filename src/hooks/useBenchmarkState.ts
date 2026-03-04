@@ -37,8 +37,11 @@ export function useBenchmarkState() {
     },
   })
 
+  // Send iterations + 5 so the first 5 (warm-up) iterations can be dropped client-side
+  const warmIterations = iterations + 5
+
   const aesBenchmarkEncrypt = useMutation({
-    mutationFn: () => ciphersApi.aesBenchmarkEncrypt({ data: text, key: aesKey, iterations }),
+    mutationFn: () => ciphersApi.aesBenchmarkEncrypt({ data: text, key: aesKey, iterations: warmIterations }),
   })
 
   const affineBenchmarkEncrypt = useMutation({
@@ -48,13 +51,13 @@ export function useBenchmarkState() {
         p_keys: parseKeys(pKeys),
         a_keys: parseKeys(aKeys),
         s_keys: parseKeys(sKeys),
-        iterations,
+        iterations: warmIterations,
       }),
   })
 
   const aesBenchmarkDecrypt = useMutation({
     mutationFn: (ciphertext: string) =>
-      ciphersApi.aesBenchmarkDecrypt({ data: ciphertext, key: aesKey, iterations }),
+      ciphersApi.aesBenchmarkDecrypt({ data: ciphertext, key: aesKey, iterations: warmIterations }),
   })
 
   const affineBenchmarkDecrypt = useMutation({
@@ -64,7 +67,7 @@ export function useBenchmarkState() {
         p_keys: parseKeys(pKeys),
         a_keys: parseKeys(aKeys),
         s_keys: parseKeys(sKeys),
-        iterations,
+        iterations: warmIterations,
       }),
   })
 
@@ -96,16 +99,22 @@ export function useBenchmarkState() {
     ])
   }
 
-  const aesEncStats = hasEncryptResults ? stats(aesBenchmarkEncrypt.data!.execution_times) : null
-  const affineEncStats = hasEncryptResults ? stats(affineBenchmarkEncrypt.data!.execution_times) : null
-  const aesDecStats = hasDecryptResults ? stats(aesBenchmarkDecrypt.data!.execution_times) : null
-  const affineDecStats = hasDecryptResults ? stats(affineBenchmarkDecrypt.data!.execution_times) : null
+  // Drop the first (warm-up) iteration before computing stats and chart data
+  const aesEncTimes   = hasEncryptResults ? aesBenchmarkEncrypt.data!.execution_times.slice(5) : []
+  const affineEncTimes = hasEncryptResults ? affineBenchmarkEncrypt.data!.execution_times.slice(5) : []
+  const aesDecTimes   = hasDecryptResults ? aesBenchmarkDecrypt.data!.execution_times.slice(5) : []
+  const affineDecTimes = hasDecryptResults ? affineBenchmarkDecrypt.data!.execution_times.slice(5) : []
+
+  const aesEncStats   = hasEncryptResults ? stats(aesEncTimes) : null
+  const affineEncStats = hasEncryptResults ? stats(affineEncTimes) : null
+  const aesDecStats   = hasDecryptResults ? stats(aesDecTimes) : null
+  const affineDecStats = hasDecryptResults ? stats(affineDecTimes) : null
 
   const encLineData = hasEncryptResults
-    ? buildLineData(aesBenchmarkEncrypt.data!.execution_times, affineBenchmarkEncrypt.data!.execution_times, iterations)
+    ? buildLineData(aesEncTimes, affineEncTimes, iterations)
     : []
   const decLineData = hasDecryptResults
-    ? buildLineData(aesBenchmarkDecrypt.data!.execution_times, affineBenchmarkDecrypt.data!.execution_times, iterations)
+    ? buildLineData(aesDecTimes, affineDecTimes, iterations)
     : []
 
   const encBarData = hasEncryptResults ? buildBarData(aesEncStats!, affineEncStats!) : []
