@@ -3,10 +3,19 @@ import { useMutation } from '@tanstack/react-query'
 import { ciphersApi } from '@/api/ciphers.api'
 import { parseKeys, stats, buildLineData, buildBarData } from '@/utils/benchmark'
 
+export type BenchmarkStep =
+  | 'aes-encrypt'
+  | 'affine-encrypt'
+  | 'aes-decrypt'
+  | 'affine-decrypt'
+  | 'delay'
+  | null
+
 export function useBenchmarkState() {
   const [iterations, setIterations] = useState(100)
   const [text, setText] = useState('')
   const [aesKey, setAesKey] = useState('')
+  const [currentStep, setCurrentStep] = useState<BenchmarkStep>(null)
 
   const [manualP, setManualP] = useState('')
   const [autoGenCount, setAutoGenCount] = useState(3)
@@ -41,7 +50,8 @@ export function useBenchmarkState() {
   const warmIterations = iterations + 5
 
   const aesBenchmarkEncrypt = useMutation({
-    mutationFn: () => ciphersApi.aesBenchmarkEncrypt({ data: text, key: aesKey, iterations: warmIterations }),
+    mutationFn: () =>
+      ciphersApi.aesBenchmarkEncrypt({ data: text, key: aesKey, iterations: warmIterations }),
   })
 
   const affineBenchmarkEncrypt = useMutation({
@@ -71,11 +81,6 @@ export function useBenchmarkState() {
       }),
   })
 
-  const isRunning =
-    aesBenchmarkEncrypt.isPending ||
-    affineBenchmarkEncrypt.isPending ||
-    aesBenchmarkDecrypt.isPending ||
-    affineBenchmarkDecrypt.isPending
 
   const hasEncryptResults = !!(aesBenchmarkEncrypt.data && affineBenchmarkEncrypt.data)
   const hasDecryptResults = !!(aesBenchmarkDecrypt.data && affineBenchmarkDecrypt.data)
@@ -86,28 +91,48 @@ export function useBenchmarkState() {
     pKeys.trim() !== '' &&
     aKeys.trim() !== '' &&
     sKeys.trim() !== '' &&
-    !isRunning
+    currentStep === null
+
+  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
   const handleRun = async () => {
-    const [aesEnc, affineEnc] = await Promise.all([
-      aesBenchmarkEncrypt.mutateAsync(),
-      affineBenchmarkEncrypt.mutateAsync(),
-    ])
-    await Promise.all([
-      aesBenchmarkDecrypt.mutateAsync(aesEnc.result),
-      affineBenchmarkDecrypt.mutateAsync(affineEnc.cipher_readable),
-    ])
+    aesBenchmarkEncrypt.reset()
+    affineBenchmarkEncrypt.reset()
+    aesBenchmarkDecrypt.reset()
+    affineBenchmarkDecrypt.reset()
+    try {
+      setCurrentStep('aes-encrypt')
+      const aesEnc = await aesBenchmarkEncrypt.mutateAsync()
+      setCurrentStep('delay')
+      await delay(1000)
+      setCurrentStep('affine-encrypt')
+      const affineEnc = await affineBenchmarkEncrypt.mutateAsync()
+      setCurrentStep('delay')
+      await delay(1000)
+      setCurrentStep('aes-decrypt')
+      await aesBenchmarkDecrypt.mutateAsync(aesEnc.result)
+      setCurrentStep('delay')
+      await delay(1000)
+      setCurrentStep('affine-decrypt')
+      await affineBenchmarkDecrypt.mutateAsync(affineEnc.cipher_readable)
+    } finally {
+      setCurrentStep(null)
+    }
   }
 
   // Drop the first (warm-up) iteration before computing stats and chart data
-  const aesEncTimes   = hasEncryptResults ? aesBenchmarkEncrypt.data!.execution_times.slice(5) : []
-  const affineEncTimes = hasEncryptResults ? affineBenchmarkEncrypt.data!.execution_times.slice(5) : []
-  const aesDecTimes   = hasDecryptResults ? aesBenchmarkDecrypt.data!.execution_times.slice(5) : []
-  const affineDecTimes = hasDecryptResults ? affineBenchmarkDecrypt.data!.execution_times.slice(5) : []
+  const aesEncTimes = hasEncryptResults ? aesBenchmarkEncrypt.data!.execution_times.slice(5) : []
+  const affineEncTimes = hasEncryptResults
+    ? affineBenchmarkEncrypt.data!.execution_times.slice(5)
+    : []
+  const aesDecTimes = hasDecryptResults ? aesBenchmarkDecrypt.data!.execution_times.slice(5) : []
+  const affineDecTimes = hasDecryptResults
+    ? affineBenchmarkDecrypt.data!.execution_times.slice(5)
+    : []
 
-  const aesEncStats   = hasEncryptResults ? stats(aesEncTimes) : null
+  const aesEncStats = hasEncryptResults ? stats(aesEncTimes) : null
   const affineEncStats = hasEncryptResults ? stats(affineEncTimes) : null
-  const aesDecStats   = hasDecryptResults ? stats(aesDecTimes) : null
+  const aesDecStats = hasDecryptResults ? stats(aesDecTimes) : null
   const affineDecStats = hasDecryptResults ? stats(affineDecTimes) : null
 
   const encLineData = hasEncryptResults
@@ -121,21 +146,31 @@ export function useBenchmarkState() {
   const decBarData = hasDecryptResults ? buildBarData(aesDecStats!, affineDecStats!) : []
 
   return {
-    iterations, setIterations,
-    text, setText,
-    aesKey, setAesKey,
-    manualP, setManualP,
-    autoGenCount, setAutoGenCount,
-    minP, setMinP,
-    maxP, setMaxP,
-    pKeys, aKeys, sKeys,
+    currentStep,
+    iterations,
+    setIterations,
+    text,
+    setText,
+    aesKey,
+    setAesKey,
+    manualP,
+    setManualP,
+    autoGenCount,
+    setAutoGenCount,
+    minP,
+    setMinP,
+    maxP,
+    setMaxP,
+    pKeys,
+    aKeys,
+    sKeys,
     generateAesKey,
     generateAffineParams,
     aesBenchmarkEncrypt,
     affineBenchmarkEncrypt,
     aesBenchmarkDecrypt,
     affineBenchmarkDecrypt,
-    isRunning,
+    isRunning: currentStep !== null,
     canRun,
     hasEncryptResults,
     hasDecryptResults,

@@ -1,6 +1,10 @@
 import { useBenchmarkState } from '@/hooks/useBenchmarkState'
 import BenchmarkConfig from '@/components/benchmark/BenchmarkConfig'
+import BenchmarkProgress from '@/components/benchmark/BenchmarkProgress'
 import ResultSection from '@/components/benchmark/ResultSection'
+import type { BenchmarkStep } from '@/hooks/useBenchmarkState'
+
+const STEP_ORDER: BenchmarkStep[] = ['aes-encrypt', 'affine-encrypt', 'aes-decrypt', 'affine-decrypt']
 
 const ChartIcon = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -10,6 +14,13 @@ const ChartIcon = ({ size = 18 }: { size?: number }) => (
 
 export default function BenchmarkPage() {
   const state = useBenchmarkState()
+
+  const completedSteps: BenchmarkStep[] = [
+    state.aesBenchmarkEncrypt.isSuccess ? 'aes-encrypt' : null,
+    state.affineBenchmarkEncrypt.isSuccess ? 'affine-encrypt' : null,
+    state.aesBenchmarkDecrypt.isSuccess ? 'aes-decrypt' : null,
+    state.affineBenchmarkDecrypt.isSuccess ? 'affine-decrypt' : null,
+  ].filter(Boolean) as BenchmarkStep[]
 
   return (
     <div className="flex flex-col gap-6">
@@ -30,6 +41,10 @@ export default function BenchmarkPage() {
       </div>
 
       <BenchmarkConfig {...state} />
+
+      {state.currentStep !== null && (
+        <BenchmarkProgress currentStep={state.currentStep} doneSteps={completedSteps} />
+      )}
 
       {state.hasEncryptResults && (
         <ResultSection
