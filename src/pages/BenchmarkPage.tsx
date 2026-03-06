@@ -4,8 +4,6 @@ import BenchmarkProgress from '@/components/benchmark/BenchmarkProgress'
 import ResultSection from '@/components/benchmark/ResultSection'
 import type { BenchmarkStep } from '@/hooks/useBenchmarkState'
 
-const STEP_ORDER: BenchmarkStep[] = ['aes-encrypt', 'affine-encrypt', 'aes-decrypt', 'affine-decrypt']
-
 const ChartIcon = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />

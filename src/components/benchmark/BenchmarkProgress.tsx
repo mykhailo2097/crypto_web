@@ -47,7 +47,6 @@ export default function BenchmarkProgress({ currentStep, doneSteps }: Props) {
           const isDone = doneSteps.includes(step.key)
           const isActive = currentStep === step.key
           const isDelay = currentStep === 'delay' && doneSteps.includes(step.key) && !doneSteps.includes(STEPS[idx + 1]?.key ?? null)
-          const isPending = !isDone && !isActive
 
           return (
             <div key={step.key} className="flex items-center gap-2 flex-1">
