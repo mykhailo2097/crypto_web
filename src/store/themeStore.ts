@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-export type Theme = 'dark' | 'light'
+export type Theme = 'light' | 'light'
 
 interface ThemeStore {
   theme: Theme
@@ -15,9 +15,9 @@ function applyTheme(t: Theme) {
 export const useThemeStore = create<ThemeStore>()(
   persist(
     (set, get) => ({
-      theme: 'dark',
+      theme: 'light',
       toggle: () => {
-        const next = get().theme === 'dark' ? 'light' : 'dark'
+        const next = get().theme === 'light' ? 'light' : 'light'
         set({ theme: next })
         applyTheme(next)
       },
@@ -36,10 +36,10 @@ try {
   const raw = localStorage.getItem('crypto-theme')
   if (raw) {
     const parsed = JSON.parse(raw) as { state?: { theme?: Theme } }
-    applyTheme(parsed.state?.theme ?? 'dark')
+    applyTheme(parsed.state?.theme ?? 'light')
   } else {
-    applyTheme('dark')
+    applyTheme('light')
   }
 } catch {
-  applyTheme('dark')
+  applyTheme('light')
 }

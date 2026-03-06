@@ -12,7 +12,7 @@ interface ApiStore {
 export const useApiStore = create<ApiStore>()(
   persist(
     (set, get) => ({
-      mode: 'local',
+      mode: 'production',
       setMode: (mode) => set({ mode }),
       getBaseUrl: () => {
         return get().mode === 'local'
