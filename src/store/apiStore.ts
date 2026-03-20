@@ -17,7 +17,7 @@ export const useApiStore = create<ApiStore>()(
       getBaseUrl: () => {
         return get().mode === 'local'
           ? import.meta.env.VITE_LOCAL_API_URL ?? 'http://localhost:8000'
-          : import.meta.env.VITE_API_URL
+          : import.meta.env.VITE_API_URL ?? '/proxy'
       },
     }),
     { name: 'crypto-api-mode' },
